@@ -1,0 +1,457 @@
+<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#f7e6dc">
+  <title>Workbench cá nhân · Vũ</title>
+  <style>
+    :root {
+      --bg: #f8e9e0;
+      --surface: #fffaf6;
+      --surface-2: #fff6f0;
+      --ink: #282522;
+      --muted: #91877f;
+      --line: #f0e3da;
+      --orange: #ed8250;
+      --orange-soft: #f9e4d7;
+      --green: #547565;
+      --green-soft: #e5eee6;
+      --lavender: #ebe7f3;
+      --shadow: 0 9px 30px rgba(99, 63, 42, .045);
+      font-family: Inter, ui-sans-serif, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      font-synthesis: none;
+      text-rendering: optimizeLegibility;
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; }
+    body { margin: 0; min-width: 320px; color: var(--ink); background: linear-gradient(135deg,#f8e7dc 0%,#f8ece7 48%,#f9e6df 100%); }
+    button, input, textarea { font: inherit; }
+    button, a { -webkit-tap-highlight-color: transparent; }
+    button:focus-visible, a:focus-visible, input:focus-visible, textarea:focus-visible { outline: 3px solid #ed825050; outline-offset: 3px; }
+    .shell { display: grid; grid-template-columns: 150px minmax(0,1fr); gap: 38px; min-height: 100vh; padding: 15px 25px 18px 16px; }
+    .sidebar { position: sticky; top: 15px; height: calc(100vh - 30px); min-height: 560px; padding: 18px 11px; border: 1px solid rgba(255,255,255,.7); border-radius: 22px; background: rgba(255,250,246,.82); display: flex; flex-direction: column; }
+    .brand { color: var(--ink); padding: 2px 8px 20px; font-weight: 690; font-size: 13px; letter-spacing: -.025em; }
+    .brand-mark { display: none; }
+    .nav { display: grid; gap: 3px; }
+    .nav-group { padding: 10px 0 9px; }
+    .nav-group + .nav-group { border-top: 1px solid var(--line); margin-top: 8px; }
+    .nav a { display:flex; align-items:center; gap:10px; min-height:34px; padding:0 9px; border-radius:10px; font-size:11px; color:#716a64; transition:background .16s,color .16s; }
+    .nav a:hover { background:#f8eee7; color:var(--ink); }
+    .nav a.active { color:#6e422f; background:#fff; font-weight:650; box-shadow:0 2px 10px rgba(100,65,45,.035); }
+    .nav-icon { width:14px; text-align:center; color:#ad7b62; font-size:12px; }
+    .side-foot { margin-top:auto; padding:14px 8px 3px; color:#9a8d84; font-size:10px; line-height:1.5; border-top:1px solid var(--line); }
+    main { min-width:0; max-width:1570px; width:100%; margin:0 auto; padding:4px 0 25px; }
+    .topbar { display:flex; align-items:center; justify-content:space-between; min-height:26px; margin:4px 0 27px; }
+    .date-line { color:#8f8279; font-size:11px; }
+    .top-right { display:flex; align-items:center; gap:15px; }
+    .top-link { border:0; background:transparent; color:#766c65; font-size:10px; cursor:pointer; padding:5px 0; }
+    .top-link:hover { color:var(--orange); }
+    .avatar { display:grid; place-items:center; width:27px; height:27px; border-radius:50%; background:#fff; border:1px solid #f1e4dc; color:#66554b; font-weight:700; font-size:10px; }
+    .hero { display:grid; grid-template-columns:minmax(0,1fr) 212px; align-items:center; gap:26px; margin-bottom:18px; }
+    .greeting { margin:0; font-size:clamp(32px,4.3vw,47px); line-height:1.06; letter-spacing:-.055em; font-weight:660; }
+    .hero-copy { margin:9px 0 0; color:#8b7e75; font-size:12px; line-height:1.6; }
+    .today-card { padding:14px 16px; border-radius:17px; background:rgba(255,250,246,.74); border:1px solid rgba(255,255,255,.7); }
+    .today-card strong { display:block; font-size:15px; font-weight:690; letter-spacing:-.025em; }
+    .today-card span { display:block; color:#91847b; font-size:10px; margin-top:5px; line-height:1.45; }
+    .capture { display:flex; gap:10px; align-items:center; min-height:45px; padding:5px 6px 5px 16px; margin-bottom:31px; border:1px solid rgba(255,255,255,.9); border-radius:15px; background:rgba(255,250,246,.9); box-shadow:0 4px 18px rgba(112,73,49,.025); }
+    .capture input { flex:1; min-width:0; border:0; outline:0; background:transparent; padding:9px 0; color:var(--ink); font-size:11px; }
+    .capture input::placeholder { color:#aa9c92; }
+    .capture button { flex:none; width:34px; height:34px; border:0; border-radius:11px; background:var(--orange); color:white; font-size:20px; line-height:1; cursor:pointer; box-shadow:0 4px 9px #ed825033; }
+    .capture button:hover { background:#dd7341; }
+    .section { margin-top:26px; }
+    .section-head { display:flex; justify-content:space-between; align-items:baseline; gap:14px; margin-bottom:12px; }
+    .section-head h2 { margin:0; font-size:16px; letter-spacing:-.035em; font-weight:680; }
+    .section-meta { color:#9b8d84; font-size:9px; text-align:right; }
+    .stats { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:12px; }
+    .stat { min-height:112px; padding:16px 17px; border:1px solid rgba(255,255,255,.8); border-radius:17px; background:rgba(255,250,246,.88); box-shadow:var(--shadow); }
+    .stat-label { color:#8d8279; font-size:10px; }
+    .stat-value { margin-top:13px; font-size:25px; line-height:1; letter-spacing:-.055em; font-weight:680; overflow-wrap:anywhere; }
+    .stat-unit { font-size:11px; letter-spacing:0; font-weight:500; color:#655e58; margin-left:4px; }
+    .stat-note { margin-top:9px; color:#94877e; font-size:9px; line-height:1.45; }
+    .milestones { margin-top:13px; padding:4px 20px; border:1px solid rgba(255,255,255,.8); border-radius:18px; background:rgba(255,250,246,.78); box-shadow:var(--shadow); }
+    .milestone-row { display:grid; grid-template-columns:repeat(3,minmax(0,1fr)); border-bottom:1px solid #f1e6de; }
+    .milestone-row:last-child { border-bottom:0; }
+    .milestone { display:flex; gap:9px; align-items:flex-start; min-height:51px; padding:12px 7px 10px 0; }
+    .milestone-dot { flex:none; width:7px; height:7px; margin-top:4px; border-radius:50%; background:var(--orange); }
+    .milestone-dot.future { background:transparent; border:1px solid #cbbab0; }
+    .milestone strong { display:block; font-size:10px; font-weight:590; line-height:1.35; }
+    .milestone span { display:block; margin-top:4px; color:#9c8f86; font-size:8px; }
+    .today-grid { display:grid; grid-template-columns:repeat(4,minmax(0,1fr)); gap:12px; }
+    .today-stat { min-height:112px; padding:15px 16px; background:rgba(255,250,246,.87); border:1px solid rgba(255,255,255,.8); border-radius:17px; box-shadow:var(--shadow); }
+    .today-stat-label { font-size:9px; color:#8e827a; }
+    .today-stat-value { margin-top:12px; font-size:23px; font-weight:670; letter-spacing:-.05em; line-height:1; }
+    .today-stat-note { color:#94877e; font-size:9px; margin-top:9px; line-height:1.45; }
+    .progress { margin-top:9px; height:4px; border-radius:99px; background:#f1e5dc; overflow:hidden; }
+    .progress span { display:block; height:100%; width:0; border-radius:99px; background:var(--orange); }
+    .three-col { display:grid; grid-template-columns:1.2fr 1fr 1fr; gap:12px; }
+    .content-card { min-width:0; padding:16px 17px 13px; border:1px solid rgba(255,255,255,.8); border-radius:17px; background:rgba(255,250,246,.88); box-shadow:var(--shadow); }
+    .content-card h3 { margin:0 0 8px; font-size:10px; font-weight:650; color:#786c63; }
+    .list { display:grid; }
+    .list-item { display:flex; justify-content:space-between; gap:12px; align-items:center; min-height:35px; border-top:1px solid #f1e7df; font-size:10px; }
+    .list-item:first-child { border-top:0; }
+    #record-empty[hidden] { display:none; }
+    .list-item span:first-child { overflow-wrap:anywhere; }
+    .list-item small { flex:none; color:#a19389; font-size:8px; text-align:right; }
+    .bottom-grid { display:grid; grid-template-columns:1.2fr .8fr; gap:12px; }
+    .knowledge-card { display:grid; grid-template-columns:1fr 1.05fr; gap:12px; }
+    .knowledge-copy { padding:3px 2px; }
+    .knowledge-copy h3 { margin-bottom:12px; }
+    .knowledge-copy p { margin:0; font-size:10px; line-height:1.65; color:#766b63; }
+    .knowledge-tags { display:flex; flex-wrap:wrap; gap:6px; margin-top:11px; }
+    .tag { border-radius:99px; background:#f8eee6; color:#8c6551; padding:5px 8px; font-size:8px; }
+    .reflection textarea { width:100%; min-height:83px; border:0; outline:0; resize:vertical; background:transparent; color:var(--ink); font-size:10px; line-height:1.6; padding:4px 0; }
+    .reflection textarea::placeholder { color:#aa9c92; }
+    .save-line { display:flex; justify-content:space-between; align-items:center; gap:8px; border-top:1px solid #f1e7df; padding-top:9px; color:#9a8c83; font-size:8px; }
+    .save-dot { display:inline-block; width:5px; height:5px; border-radius:50%; background:#76a382; margin-right:5px; }
+    .long-card { display:flex; flex-direction:column; justify-content:space-between; min-height:150px; }
+    .long-title { font-size:13px; font-weight:650; line-height:1.35; margin:4px 0; }
+    .long-copy { color:#8f837a; font-size:9px; line-height:1.55; }
+    .long-link { color:#bd704a; font-size:9px; font-weight:650; margin-top:15px; }
+    .footer { margin-top:24px; color:#a1948a; text-align:center; font-size:9px; }
+    .toast { position:fixed; z-index:8; left:50%; bottom:22px; transform:translate(-50%,12px); opacity:0; pointer-events:none; padding:10px 14px; background:#342c27; color:#fff9f3; border-radius:11px; font-size:11px; box-shadow:0 8px 24px #47352b33; transition:opacity .18s,transform .18s; }
+    .toast.show { opacity:1; transform:translate(-50%,0); }
+    @media (min-width:1500px) { .shell { grid-template-columns:170px minmax(0,1fr); gap:48px; } }
+    @media (max-width:1000px) {
+      .shell { grid-template-columns:66px minmax(0,1fr); gap:22px; padding-right:20px; }
+      .sidebar { align-items:center; padding-inline:8px; }
+      .brand { padding:3px 0 21px; }
+      .brand-mark { display:grid; place-items:center; width:32px; height:32px; border-radius:11px; background:var(--orange-soft); color:#9c5532; font-size:12px; font-weight:700; }
+      .brand-name,.nav-label,.side-foot,.nav-text { display:none; }
+      .nav { width:100%; }
+      .nav a { justify-content:center; padding:0; }
+      .nav-icon { font-size:14px; }
+      .hero { grid-template-columns:minmax(0,1fr) 190px; }
+      .stats,.today-grid { gap:9px; }
+      .stat,.today-stat { padding:13px; }
+    }
+    @media (max-width:720px) {
+      .shell { display:block; padding:0 14px 74px; }
+      .sidebar { position:fixed; z-index:5; top:auto; bottom:0; left:0; right:0; width:100%; height:62px; min-height:0; border-radius:17px 17px 0 0; border:1px solid rgba(255,255,255,.85); border-bottom:0; padding:6px 8px; display:block; }
+      .brand,.side-foot,.nav-group + .nav-group { display:none; }
+      .nav { height:100%; grid-template-columns:repeat(8,minmax(0,1fr)); display:grid; align-items:center; gap:2px; }
+      .nav a { min-height:46px; border-radius:11px; }
+      main { padding-top:19px; }
+      .topbar { margin:0 1px 24px; }
+      .top-link { font-size:9px; }
+      .top-right { gap:10px; }
+      .hero { grid-template-columns:1fr; gap:14px; margin-bottom:16px; }
+      .today-card { max-width:none; padding:12px 14px; }
+      .today-card strong { font-size:13px; }
+      .capture { margin-bottom:26px; }
+      .stats,.today-grid { grid-template-columns:repeat(2,minmax(0,1fr)); gap:9px; }
+      .stat,.today-stat { min-height:104px; }
+      .stat-value { font-size:22px; }
+      .milestones { padding:3px 13px; }
+      .milestone-row { grid-template-columns:1fr; }
+      .milestone { min-height:43px; padding:10px 2px; }
+      .three-col,.bottom-grid { grid-template-columns:1fr; }
+      .knowledge-card { grid-template-columns:1fr; }
+      .section { margin-top:23px; }
+      .footer { padding-bottom:7px; }
+    }
+    @media (max-width:390px) {
+      .shell { padding-inline:10px; }
+      .nav { grid-template-columns:repeat(4,minmax(0,1fr)); }
+      .nav-group:first-child { display:contents; }
+      .nav-group:first-child a:nth-child(n+4) { display:none; }
+      .section-head h2 { font-size:15px; }
+      .section-meta { max-width:46%; line-height:1.4; }
+    }
+    @media (prefers-reduced-motion: reduce) { *,*::before,*::after { scroll-behavior:auto!important; transition:none!important; } }
+  </style>
+</head>
+<body>
+  <div class="shell">
+    <aside class="sidebar" aria-label="Điều hướng chính">
+      <a class="brand" href="#top"><span class="brand-mark">V.</span><span class="brand-name">个人工作台 · Workbench</span></a>
+      <nav class="nav">
+        <div class="nav-group">
+          <a class="active" href="#achievements"><span class="nav-icon" aria-hidden="true">☆</span><span class="nav-text">Thành tựu</span></a>
+          <a href="#today"><span class="nav-icon" aria-hidden="true">⌂</span><span class="nav-text">Hôm nay</span></a>
+          <a href="#records"><span class="nav-icon" aria-hidden="true">▤</span><span class="nav-text">Ghi chép</span></a>
+          <a href="#practice"><span class="nav-icon" aria-hidden="true">◉</span><span class="nav-text">Thực hành</span></a>
+          <a href="#work"><span class="nav-icon" aria-hidden="true">▣</span><span class="nav-text">Công việc</span></a>
+        </div>
+        <div class="nav-group">
+          <a href="#knowledge"><span class="nav-icon" aria-hidden="true">◫</span><span class="nav-text">Kiến thức</span></a>
+          <a href="#reflection"><span class="nav-icon" aria-hidden="true">◷</span><span class="nav-text">Nhìn lại</span></a>
+          <a href="#long-term"><span class="nav-icon" aria-hidden="true">⌁</span><span class="nav-text">Dài hạn</span></a>
+        </div>
+      </nav>
+      <div class="side-foot">Một nơi để giữ<br>việc và ý tưởng.</div>
+    </aside>
+
+    <main id="top">
+      <header class="topbar">
+        <div class="date-line" id="date-line"></div>
+        <div class="top-right">
+          <button class="top-link" type="button" id="capture-link">Ghi nhanh</button>
+          <a class="top-link" href="#peter">Peter</a>
+          <span class="avatar" aria-label="Vũ">V</span>
+        </div>
+      </header>
+
+      <section class="hero" aria-labelledby="greeting">
+        <div>
+          <h1 class="greeting" id="greeting">Chào Vũ, mình cùng bắt đầu nhé.</h1>
+          <p class="hero-copy">Một góc riêng để gom công việc, kiến thức và những ý tưởng bạn muốn theo đuổi.</p>
+        </div>
+        <div class="today-card">
+          <strong id="today-date"></strong>
+          <span>Workbench cá nhân · Việt Nam</span>
+        </div>
+      </section>
+
+      <form class="capture" id="capture-form" autocomplete="off">
+        <input id="capture-input" type="text" maxlength="180" placeholder="Ghi nhanh: một việc / một ý tưởng / một người cần nhớ…" aria-label="Ghi nhanh việc hoặc ý tưởng">
+        <button type="submit" aria-label="Thêm ghi chép">+</button>
+      </form>
+
+      <section class="section" id="achievements" aria-labelledby="achievements-title">
+        <div class="section-head">
+          <h2 id="achievements-title">Thành tựu</h2>
+          <span class="section-meta">Những nền tảng bạn đang xây</span>
+        </div>
+        <div class="stats">
+          <article class="stat">
+            <div class="stat-label">Agent cá nhân</div>
+            <div class="stat-value">01<span class="stat-unit">Peter</span></div>
+            <div class="stat-note">Hồ sơ Hermes đã được tạo</div>
+          </article>
+          <article class="stat">
+            <div class="stat-label">Model làm việc</div>
+            <div class="stat-value" style="font-size:21px">GPT-6 Luna</div>
+            <div class="stat-note">OpenAI Codex · reasoning medium</div>
+          </article>
+          <article class="stat">
+            <div class="stat-label">Kênh nhắn tin</div>
+            <div class="stat-value">Lark</div>
+            <div class="stat-note">Feishu adapter đã kết nối với Peter</div>
+          </article>
+          <article class="stat">
+            <div class="stat-label">Ngôn ngữ làm việc</div>
+            <div class="stat-value" style="font-size:20px">VI · EN · 中文</div>
+            <div class="stat-note">Giao tiếp và học tập đa ngôn ngữ</div>
+          </article>
+        </div>
+        <div class="milestones" aria-label="Các cột mốc và việc đang theo đuổi">
+          <div class="milestone-row">
+            <div class="milestone"><i class="milestone-dot" aria-hidden="true"></i><div><strong>Tạo agent Peter trên Hermes</strong><span>30 tháng 10 · đã hoàn thành</span></div></div>
+            <div class="milestone"><i class="milestone-dot" aria-hidden="true"></i><div><strong>Chọn GPT-6 Luna · medium</strong><span>30 tháng 10 · đã xác minh phản hồi</span></div></div>
+            <div class="milestone"><i class="milestone-dot" aria-hidden="true"></i><div><strong>Kết nối Peter với Lark</strong><span>30 tháng 10 · adapter đã kết nối</span></div></div>
+          </div>
+          <div class="milestone-row">
+            <div class="milestone"><i class="milestone-dot future" aria-hidden="true"></i><div><strong>Thử nhắn Peter trực tiếp trên Lark</strong><span>Đang chờ bạn gửi tin nhắn xác nhận</span></div></div>
+            <div class="milestone"><i class="milestone-dot future" aria-hidden="true"></i><div><strong>Hoàn thiện workbench cá nhân</strong><span>Bản đầu tiên theo ảnh tham khảo</span></div></div>
+            <div class="milestone"><i class="milestone-dot future" aria-hidden="true"></i><div><strong>Lưu lại quy trình AI Agent</strong><span>Từ tài liệu hướng dẫn của bạn</span></div></div>
+          </div>
+        </div>
+      </section>
+
+      <section class="section" id="today" aria-labelledby="today-title">
+        <div class="section-head">
+          <h2 id="today-title">Hôm nay</h2>
+          <span class="section-meta">Các công cụ và ghi chép đang có ở đây</span>
+        </div>
+        <div class="today-grid">
+          <article class="today-stat">
+            <div class="today-stat-label">Agent cá nhân</div>
+            <div class="today-stat-value">Peter</div>
+            <div class="today-stat-note">Hermes profile · GPT-6 Luna</div>
+          </article>
+          <article class="today-stat">
+            <div class="today-stat-label">Kênh liên lạc</div>
+            <div class="today-stat-value">Lark</div>
+            <div class="today-stat-note">Đã kết nối · chờ thử tin nhắn</div>
+          </article>
+          <article class="today-stat">
+            <div class="today-stat-label">Model làm việc</div>
+            <div class="today-stat-value" style="font-size:18px">GPT-6 Luna</div>
+            <div class="today-stat-note">OpenAI Codex · reasoning medium</div>
+          </article>
+          <article class="today-stat">
+            <div class="today-stat-label">Ghi chép nhanh</div>
+            <div class="today-stat-value" id="record-total">0</div>
+            <div class="today-stat-note">Ý tưởng lưu trong trình duyệt này</div>
+          </article>
+        </div>
+      </section>
+
+      <section class="section" id="records" aria-labelledby="records-title">
+        <div class="section-head">
+          <h2 id="records-title">Ghi chép · Thực hành · Công việc</h2>
+          <span class="section-meta">Thông tin từ những việc bạn đã làm</span>
+        </div>
+        <div class="three-col">
+          <article class="content-card" id="work">
+            <h3>Công việc · gần đây</h3>
+            <div class="list">
+              <div class="list-item"><span>Peter · trợ lý Hermes</span><small>Agent cá nhân</small></div>
+              <div class="list-item"><span>Kết nối Feishu / Lark</span><small>Đã cấu hình</small></div>
+              <div class="list-item"><span>Workbench cá nhân</span><small>Đang thiết kế</small></div>
+            </div>
+          </article>
+          <article class="content-card" id="practice">
+            <h3>Thực hành · công cụ</h3>
+            <div class="list">
+              <div class="list-item"><span>OpenAI · GPT-6 Luna</span><small>Medium</small></div>
+              <div class="list-item"><span>Hermes Agent</span><small>Gateway</small></div>
+              <div class="list-item"><span>Codex</span><small>Phát triển</small></div>
+            </div>
+          </article>
+          <article class="content-card">
+            <h3>Ghi nhanh</h3>
+            <div class="list" id="record-list" aria-live="polite"></div>
+            <div class="list-item" id="record-empty"><span>Chưa có ghi chép</span><small>Thêm ở đầu trang</small></div>
+          </article>
+        </div>
+      </section>
+
+      <section class="section" id="knowledge" aria-labelledby="knowledge-title">
+        <div class="section-head">
+          <h2 id="knowledge-title">Kiến thức · Nhìn lại · Dài hạn</h2>
+          <span class="section-meta">Những điều đáng giữ lại</span>
+        </div>
+        <div class="bottom-grid">
+          <article class="content-card knowledge-card">
+            <div class="knowledge-copy">
+              <h3>Kiến thức</h3>
+              <p>AI Agent 简易教程<br>Quy trình xây dựng agent, thiết lập Hermes và kết nối Lark.</p>
+              <div class="knowledge-tags"><span class="tag">AI Agent</span><span class="tag">Hermes</span><span class="tag">Lark</span></div>
+            </div>
+            <div class="knowledge-copy" id="reflection">
+              <h3>Nhìn lại</h3>
+              <p>Điều gì hôm nay đã giúp công việc của bạn nhẹ hơn?</p>
+              <div class="reflection">
+                <textarea id="reflection-input" maxlength="900" placeholder="Ghi lại một điều bạn muốn nhớ… " aria-label="Ghi chú nhìn lại"></textarea>
+                <div class="save-line"><span><i class="save-dot" aria-hidden="true"></i><span id="reflection-status">Lưu tự động trên thiết bị</span></span><span id="reflection-count">0 / 900</span></div>
+              </div>
+            </div>
+          </article>
+          <article class="content-card long-card" id="long-term">
+            <div>
+              <h3>Dài hạn</h3>
+              <div class="long-title">Xây dựng một trợ lý hữu ích mỗi ngày</div>
+              <div class="long-copy">Peter · Codex · Lark<br>Một hệ thống nhỏ, thực tế và phù hợp cách bạn làm việc.</div>
+            </div>
+            <a class="long-link" href="#peter">Xem cấu hình Peter ↓</a>
+          </article>
+        </div>
+      </section>
+
+      <section class="section" id="peter" aria-label="Thông tin Peter">
+        <div class="section-head">
+          <h2>Peter · Hermes</h2>
+          <span class="section-meta">GPT-6 Luna · OpenAI Codex · medium</span>
+        </div>
+        <div class="content-card">
+          <div class="list">
+            <div class="list-item"><span>Model đã phản hồi qua lệnh kiểm tra Hermes</span><small>Đã xác minh</small></div>
+            <div class="list-item"><span>Feishu adapter hoạt động trong gateway</span><small>Đã kết nối</small></div>
+          </div>
+          <div style="display:flex;align-items:center;justify-content:space-between;gap:12px;margin-top:12px">
+            <span class="section-meta" style="text-align:left">Mở Peter trong terminal trên máy của bạn</span>
+            <button id="copy-command" type="button" style="border:0;border-radius:9px;padding:9px 12px;background:#f8e4d8;color:#875236;font-size:9px;font-weight:650;cursor:pointer">Sao chép hermes -p peter chat</button>
+          </div>
+        </div>
+      </section>
+      <footer class="footer">Personal Workbench · Vũ</footer>
+    </main>
+  </div>
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+  <script>
+    (() => {
+      const $ = (selector) => document.querySelector(selector);
+      const storage = {
+        get(key, fallback) { try { const value = localStorage.getItem(key); return value === null ? fallback : JSON.parse(value); } catch { return fallback; } },
+        set(key, value) { try { localStorage.setItem(key, JSON.stringify(value)); return true; } catch { return false; } }
+      };
+      const now = new Date();
+      const formatter = (options) => new Intl.DateTimeFormat('vi-VN', { timeZone: 'Asia/Ho_Chi_Minh', ...options });
+      const parts = Object.fromEntries(formatter({ year: 'numeric', month: 'numeric', day: 'numeric' }).formatToParts(now).map(part => [part.type, part.value]));
+      const dateLabel = formatter({ weekday: 'long', day: 'numeric', month: 'long' }).format(now);
+      $('#date-line').textContent = dateLabel.charAt(0).toUpperCase() + dateLabel.slice(1);
+      $('#today-date').textContent = formatter({ day: 'numeric', month: 'long' }).format(now);
+
+      const month = Number(parts.month);
+      const year = Number(parts.year);
+      const day = Number(parts.day);
+      const midpoint = new Date(Date.UTC(year, month - 1, day, 12));
+      const offset = (midpoint.getUTCDay() + 6) % 7;
+      const monday = new Date(Date.UTC(year, month - 1, day - offset, 12));
+      const sunday = new Date(monday);
+      sunday.setUTCDate(monday.getUTCDate() + 6);
+      const monthLabel = formatter({ month: 'long', year: 'numeric' }).format(now);
+      $('.today-card span').textContent = 'Workbench cá nhân · ' + monthLabel;
+
+      const recordsKey = 'vu-workbench-records-v2';
+      const reflectKey = 'vu-workbench-reflection-v2';
+      let records = storage.get(recordsKey, []);
+      if (!Array.isArray(records)) records = [];
+
+      function updateToday() {
+        $('#record-total').textContent = String(records.length);
+      }
+      function renderRecords() {
+        const list = $('#record-list');
+        list.replaceChildren();
+        $('#record-empty').hidden = records.length > 0;
+        records.slice(0, 3).forEach((record) => {
+          const row = document.createElement('div');
+          row.className = 'list-item';
+          const title = document.createElement('span');
+          title.textContent = record.text;
+          const time = document.createElement('small');
+          time.textContent = record.date;
+          row.append(title, time);
+          list.append(row);
+        });
+        updateToday();
+      }
+      function toast(message) {
+        const el = $('#toast');
+        el.textContent = message;
+        el.classList.add('show');
+        clearTimeout(toast.timer);
+        toast.timer = setTimeout(() => el.classList.remove('show'), 1900);
+      }
+      $('#capture-form').addEventListener('submit', (event) => {
+        event.preventDefault();
+        const input = $('#capture-input');
+        const text = input.value.trim();
+        if (!text) { input.focus(); return; }
+        records.unshift({ id: Date.now(), text, date: formatter({ day: 'numeric', month: 'short' }).format(new Date()) });
+        records = records.slice(0, 30);
+        storage.set(recordsKey, records);
+        input.value = '';
+        renderRecords();
+        toast('Đã lưu ghi chép trên thiết bị này');
+      });
+      $('#capture-link').addEventListener('click', () => {
+        $('#capture-input').focus();
+        location.hash = '#capture-form';
+      });
+      const reflect = $('#reflection-input');
+      reflect.value = storage.get(reflectKey, '');
+      function saveReflection() {
+        const ok = storage.set(reflectKey, reflect.value);
+        $('#reflection-count').textContent = reflect.value.length + ' / 900';
+        $('#reflection-status').textContent = ok ? 'Đã lưu trên thiết bị' : 'Không lưu được trong trình duyệt';
+      }
+      reflect.addEventListener('input', saveReflection);
+      saveReflection();
+      $('#copy-command').addEventListener('click', async () => {
+        try { await navigator.clipboard.writeText('hermes -p peter chat'); toast('Đã sao chép lệnh mở Peter'); }
+        catch { toast('Lệnh: hermes -p peter chat'); }
+      });
+      document.querySelectorAll('.nav a').forEach(link => link.addEventListener('click', () => {
+        document.querySelectorAll('.nav a').forEach(item => item.classList.remove('active'));
+        link.classList.add('active');
+      }));
+      renderRecords();
+      updateToday();
+    })();
+  </script>
+</body>
+</html>
