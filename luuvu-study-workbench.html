@@ -1,0 +1,447 @@
+<!doctype html>
+<html lang="vi">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#f4e9df">
+  <meta name="description" content="Workbench cá nhân cho luuvu's Study & Logistics Assistant — thành tựu, quy trình, hồ sơ và trạng thái công cụ.">
+  <title>luuvu · Study & Logistics Workbench</title>
+  <style>
+    :root {
+      color-scheme: light;
+      --page: #f4e9df;
+      --paper: #fffaf6;
+      --paper-2: #f8f0e9;
+      --ink: #292522;
+      --muted: #817771;
+      --line: #eee3da;
+      --accent: #d77c58;
+      --accent-dark: #a95236;
+      --accent-soft: #f7e3d7;
+      --green: #417d66;
+      --green-soft: #e3f0e8;
+      --blue-soft: #e7eef0;
+      --gold: #aa7c35;
+      --gold-soft: #f6edd8;
+      --shadow: 0 16px 42px rgba(79, 51, 31, .055);
+      --radius: 24px;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    }
+    * { box-sizing: border-box; }
+    html { scroll-behavior: smooth; scroll-padding-top: 92px; }
+    body {
+      margin: 0;
+      color: var(--ink);
+      background:
+        radial-gradient(ellipse at 92% 0%, rgba(255,255,255,.62), transparent 32rem),
+        var(--page);
+      min-height: 100vh;
+      padding-bottom: 92px;
+    }
+    a { color: inherit; text-decoration: none; }
+    button { font: inherit; }
+    .shell { width: min(1060px, calc(100% - 36px)); margin: 0 auto; }
+    .topbar {
+      height: 76px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 24px;
+    }
+    .brand { display: flex; align-items: center; gap: 12px; min-width: 0; }
+    .avatar {
+      display: grid; place-items: center; flex: 0 0 42px; height: 42px;
+      border-radius: 15px; color: #fffaf6; background: var(--ink);
+      font-size: 16px; font-weight: 800; letter-spacing: -.04em;
+    }
+    .brand-copy { line-height: 1.15; }
+    .brand-copy strong { display: block; font-size: 14px; letter-spacing: .01em; }
+    .brand-copy span { color: var(--muted); font-size: 11px; }
+    .topnav { display: flex; align-items: center; gap: 6px; }
+    .topnav a {
+      color: #655c56; font-size: 13px; font-weight: 650;
+      padding: 10px 14px; border-radius: 999px; transition: .18s ease;
+    }
+    .topnav a:hover, .topnav a[aria-current="location"] { background: var(--paper); color: var(--accent-dark); }
+    .hero { padding: 44px 0 30px; }
+    .eyebrow {
+      display: flex; align-items: center; gap: 8px; color: var(--accent-dark);
+      font-size: 11px; font-weight: 800; letter-spacing: .16em; text-transform: uppercase;
+    }
+    .eyebrow-dot { width: 7px; height: 7px; border-radius: 50%; background: var(--accent); }
+    h1 {
+      margin: 13px 0 10px; max-width: 760px;
+      font-size: clamp(34px, 6vw, 56px); line-height: 1.04; letter-spacing: -.055em;
+    }
+    .hero-copy { max-width: 680px; color: #6d645e; font-size: 16px; line-height: 1.65; margin: 0; }
+    .hero-row { display: flex; align-items: center; justify-content: space-between; gap: 22px; }
+    .hero-note { display: flex; align-items: center; gap: 9px; color: #706660; font-size: 12px; white-space: nowrap; }
+    .status-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--gold); box-shadow: 0 0 0 4px var(--gold-soft); }
+    .stats {
+      display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 12px;
+      margin: 8px 0 54px;
+    }
+    .stat {
+      min-height: 120px; padding: 19px 20px; border-radius: 21px;
+      background: rgba(255,250,246,.9); box-shadow: 0 6px 20px rgba(87,56,35,.025);
+    }
+    .stat-label { color: var(--muted); font-size: 11px; font-weight: 650; letter-spacing: .025em; }
+    .stat-value { display: block; margin: 12px 0 5px; font-size: 22px; font-weight: 780; letter-spacing: -.045em; line-height: 1.12; }
+    .stat-detail { color: #8c817a; font-size: 11px; line-height: 1.45; }
+    .stat-value.small { font-size: 18px; }
+    .section { margin: 0 0 56px; }
+    .section-head { display: flex; align-items: end; justify-content: space-between; gap: 18px; margin-bottom: 17px; }
+    .section-kicker { color: var(--accent-dark); font-size: 10px; font-weight: 800; letter-spacing: .13em; text-transform: uppercase; }
+    h2 { margin: 5px 0 0; font-size: clamp(21px, 3vw, 27px); letter-spacing: -.04em; line-height: 1.18; }
+    .section-desc { margin: 6px 0 0; color: var(--muted); font-size: 13px; line-height: 1.5; }
+    .count { color: #9a8e86; font-size: 11px; font-weight: 650; white-space: nowrap; }
+    .panel { background: var(--paper); border: 1px solid rgba(232,220,210,.8); border-radius: var(--radius); box-shadow: var(--shadow); }
+    .milestones { padding: 4px 22px; }
+    .milestone {
+      position: relative; display: grid; grid-template-columns: 22px minmax(0,1fr) auto;
+      gap: 13px; padding: 18px 0; align-items: start;
+    }
+    .milestone + .milestone { border-top: 1px solid var(--line); }
+    .rail { position: relative; display: flex; justify-content: center; padding-top: 4px; }
+    .rail::after {
+      content: ""; position: absolute; top: 15px; bottom: -24px; width: 1px; background: #e6d9ce;
+    }
+    .milestone:last-child .rail::after { display: none; }
+    .rail-mark {
+      position: relative; z-index: 1; width: 9px; height: 9px; border: 2px solid var(--accent);
+      background: var(--paper); border-radius: 50%;
+    }
+    .rail-mark.soft { border-color: #c8bdb5; }
+    .milestone-title { margin: 0; font-size: 14px; line-height: 1.45; font-weight: 740; letter-spacing: -.015em; }
+    .milestone-sub { margin: 4px 0 0; color: var(--muted); font-size: 12px; line-height: 1.5; }
+    .level {
+      color: #9d6a52; background: #f8eee6; border-radius: 999px;
+      padding: 5px 8px; font-size: 10px; font-weight: 800; letter-spacing: .04em; white-space: nowrap;
+    }
+    .level.pending { color: #8c682e; background: var(--gold-soft); }
+    details { margin-top: 10px; }
+    details summary {
+      width: fit-content; color: var(--accent-dark); font-size: 11px;
+      font-weight: 700; cursor: pointer; list-style: none;
+    }
+    details summary::-webkit-details-marker { display: none; }
+    details summary::after { content: "＋"; margin-left: 6px; font-weight: 500; }
+    details[open] summary::after { content: "−"; }
+    .detail-body { padding: 10px 13px; margin-top: 8px; background: var(--paper-2); border-radius: 13px; color: #655c56; font-size: 12px; line-height: 1.65; }
+    .detail-body ul { padding-left: 17px; margin: 5px 0; }
+    .detail-body li + li { margin-top: 3px; }
+    .callout {
+      display: flex; align-items: flex-start; gap: 12px; margin-top: 14px; padding: 15px 17px;
+      border-radius: 16px; background: var(--gold-soft); color: #73592d; font-size: 12px; line-height: 1.55;
+    }
+    .callout svg { flex: 0 0 17px; margin-top: 1px; }
+    .workflow {
+      display: grid; grid-template-columns: repeat(5, minmax(0,1fr)); gap: 9px; padding: 16px;
+    }
+    .step {
+      min-height: 134px; padding: 15px 13px; border: 1px solid var(--line);
+      border-radius: 17px; background: #fffdfb;
+    }
+    .step-num {
+      display: grid; place-items: center; width: 25px; height: 25px; margin-bottom: 14px;
+      border-radius: 9px; background: var(--accent-soft); color: var(--accent-dark);
+      font-size: 11px; font-weight: 800;
+    }
+    .step strong { display: block; font-size: 12px; line-height: 1.4; }
+    .step span { display: block; margin-top: 5px; color: var(--muted); font-size: 10px; line-height: 1.5; }
+    .profile-intro { padding: 22px 24px; margin-bottom: 13px; }
+    .profile-label { color: var(--green); font-size: 10px; font-weight: 850; letter-spacing: .13em; }
+    .profile-intro h3 { margin: 8px 0 7px; font-size: 21px; letter-spacing: -.035em; }
+    .profile-intro p { max-width: 770px; margin: 0; color: #6c625c; font-size: 13px; line-height: 1.6; }
+    .goal-row { display: grid; grid-template-columns: 1fr 1fr; gap: 11px; margin-top: 17px; }
+    .goal {
+      padding: 12px 14px; background: #f0f0e8; border-radius: 13px;
+      font-size: 11px; color: #726960; line-height: 1.5;
+    }
+    .goal.blue { background: var(--blue-soft); }
+    .goal b { color: #37332e; font-size: 12px; }
+    .two-col { display: grid; grid-template-columns: 1fr 1fr; gap: 13px; }
+    .info-card { padding: 19px 21px; }
+    .info-card h3 { margin: 0 0 13px; font-size: 14px; letter-spacing: -.015em; }
+    .bullet-list { list-style: none; margin: 0; padding: 0; }
+    .bullet-list li { position: relative; padding-left: 17px; font-size: 12px; line-height: 1.55; color: #5f5751; }
+    .bullet-list li + li { margin-top: 9px; }
+    .bullet-list li::before { content: ""; position: absolute; top: .46em; left: 0; width: 7px; height: 7px; border-radius: 50%; background: #7ec3a4; }
+    .outputs { display: grid; grid-template-columns: repeat(4, minmax(0,1fr)); gap: 10px; }
+    .output { padding: 15px 16px; }
+    .output .icon {
+      display: grid; place-items: center; width: 30px; height: 30px; margin-bottom: 12px;
+      border-radius: 11px; background: var(--green-soft); color: var(--green);
+    }
+    .output strong { display: block; font-size: 12px; }
+    .output span { display: block; margin-top: 5px; color: var(--muted); font-size: 10px; line-height: 1.45; }
+    .boundaries { display: grid; grid-template-columns: 1fr 1fr; gap: 13px; }
+    .boundary-title { display: flex; align-items: center; gap: 8px; margin-bottom: 13px; color: var(--green); font-size: 13px; font-weight: 800; }
+    .boundary-title.gold { color: var(--gold); }
+    .tool-status {
+      margin-top: 17px; padding: 14px 17px; border: 1px solid #ead8b3;
+      border-radius: 15px; background: #f5ecd9; color: #755a2e; font-size: 12px; line-height: 1.5;
+    }
+    .tool-status strong { color: #5f4823; }
+    footer { padding: 5px 0 34px; color: #9b8f87; font-size: 10px; line-height: 1.5; text-align: center; }
+    .bottomnav {
+      position: fixed; z-index: 5; inset: auto 0 0; padding: 9px 12px calc(9px + env(safe-area-inset-bottom));
+      background: rgba(255,250,246,.92); border-top: 1px solid rgba(226,214,204,.8);
+      backdrop-filter: blur(16px); display: none;
+    }
+    .bottomnav-inner { width: min(520px, 100%); margin: 0 auto; display: grid; grid-template-columns: repeat(3,1fr); gap: 6px; }
+    .bottomnav a { display: flex; flex-direction: column; align-items: center; gap: 3px; padding: 6px 3px; color: #8d817a; font-size: 9px; font-weight: 700; }
+    .bottomnav svg { width: 19px; height: 19px; }
+    .bottomnav a[aria-current="location"] { color: var(--accent-dark); }
+    @media (max-width: 760px) {
+      .shell { width: min(100% - 28px, 560px); }
+      .topbar { height: 66px; }
+      .topnav { display: none; }
+      .hero { padding: 35px 0 23px; }
+      .hero-row { display: block; }
+      .hero-note { margin-top: 16px; }
+      .stats { grid-template-columns: 1fr 1fr; gap: 9px; margin-bottom: 43px; }
+      .stat { min-height: 108px; padding: 15px 15px; border-radius: 19px; }
+      .stat-value { font-size: 20px; }
+      .section { margin-bottom: 43px; }
+      .section-head { margin-bottom: 14px; }
+      .milestones { padding: 3px 16px; }
+      .milestone { grid-template-columns: 17px minmax(0,1fr) auto; gap: 10px; padding: 16px 0; }
+      .level { padding: 4px 7px; font-size: 9px; }
+      .workflow { grid-template-columns: 1fr; padding: 12px; gap: 7px; }
+      .step { min-height: 0; display: grid; grid-template-columns: 28px minmax(0,1fr); column-gap: 10px; padding: 12px; }
+      .step-num { grid-row: span 2; margin: 0; }
+      .step span { margin-top: 3px; }
+      .profile-intro { padding: 19px 18px; }
+      .profile-intro h3 { font-size: 19px; }
+      .goal-row { grid-template-columns: 1fr; gap: 7px; }
+      .two-col, .boundaries { grid-template-columns: 1fr; gap: 9px; }
+      .info-card { padding: 17px 17px; }
+      .outputs { grid-template-columns: 1fr 1fr; gap: 8px; }
+      .output { padding: 13px; }
+      .output .icon { margin-bottom: 9px; }
+      .bottomnav { display: block; }
+      footer { padding-bottom: 24px; }
+    }
+    @media (prefers-reduced-motion: reduce) {
+      *, *::before, *::after { scroll-behavior: auto !important; transition: none !important; }
+    }
+  </style>
+</head>
+<body>
+  <header class="shell topbar">
+    <a class="brand" href="#top" aria-label="Workbench của luuvu">
+      <span class="avatar">H</span>
+      <span class="brand-copy"><strong>luuvu</strong><span>Personal workbench</span></span>
+    </a>
+    <nav class="topnav" aria-label="Điều hướng chính">
+      <a href="#achievements" aria-current="location">Thành tựu</a>
+      <a href="#workflow">Quy trình</a>
+      <a href="#profile">Hồ sơ agent</a>
+    </nav>
+  </header>
+
+  <main id="top" class="shell">
+    <section class="hero" aria-labelledby="page-title">
+      <div class="hero-row">
+        <div>
+          <div class="eyebrow"><span class="eyebrow-dot"></span> luuvu · Personal AI assistant</div>
+          <h1 id="page-title">Một trợ lý cho việc học và dự án</h1>
+          <p class="hero-copy">Gom bài tập Logistics, kế hoạch học tập, dự án và luyện tiếng Trung vào một quy trình rõ ràng, dễ xem lại.</p>
+        </div>
+        <div class="hero-note"><span class="status-dot"></span> Hồ sơ và kết nối đang được xác định</div>
+      </div>
+    </section>
+
+    <section class="stats" aria-label="Tóm tắt hồ sơ">
+      <article class="stat">
+        <div class="stat-label">Agent cá nhân</div>
+        <strong class="stat-value small">Study &amp; Logistics</strong>
+        <div class="stat-detail">Trợ lý học tập của luuvu</div>
+      </article>
+      <article class="stat">
+        <div class="stat-label">Academic standing</div>
+        <strong class="stat-value">3.4 <span style="color:#b0a69f;font-weight:500">→</span> 3.6</strong>
+        <div class="stat-detail">/ 4.0 hiện tại · mục tiêu</div>
+      </article>
+      <article class="stat">
+        <div class="stat-label">Từ vựng HSK</div>
+        <strong class="stat-value">450 <span style="color:#b0a69f;font-weight:500">/ 600</span></strong>
+        <div class="stat-detail">Tiến độ được nêu trong tài liệu</div>
+      </article>
+      <article class="stat">
+        <div class="stat-label">Lark · Google Drive</div>
+        <strong class="stat-value small">Chưa kết nối</strong>
+        <div class="stat-detail">Cần cấu hình trước khi đọc hoặc lưu tệp</div>
+      </article>
+    </section>
+
+    <section id="achievements" class="section" aria-labelledby="achievements-title">
+      <div class="section-head">
+        <div><div class="section-kicker">Những nền tảng đang xây</div><h2 id="achievements-title">Thành tựu &amp; cột mốc</h2><p class="section-desc">Năm cấp độ trong hồ sơ trợ lý học tập của luuvu</p></div>
+        <span class="count">LEVEL 1 — 5</span>
+      </div>
+      <div class="panel milestones">
+        <article class="milestone">
+          <div class="rail"><span class="rail-mark"></span></div>
+          <div>
+            <h3 class="milestone-title">Tìm và đặt tên cho agent</h3>
+            <p class="milestone-sub">luuvu's Study &amp; Logistics Agent · ChatGPT conversation</p>
+            <details><summary>Xem mô tả cấp 1</summary><div class="detail-body">Agent hỗ trợ luuvu sắp xếp bài tập Logistics, dự án, kế hoạch học và luyện từ vựng tiếng Trung hướng tới mục tiêu HSK 600 từ. Tài liệu ghi rõ chưa có kết nối với LMS của trường hoặc ứng dụng học tập.</div></details>
+          </div>
+          <span class="level">LEVEL 1</span>
+        </article>
+        <article class="milestone">
+          <div class="rail"><span class="rail-mark"></span></div>
+          <div>
+            <h3 class="milestone-title">Xác định vị trí và thẻ công việc</h3>
+            <p class="milestone-sub">luuvu's Study &amp; Logistics Assistant · đầu vào, đầu ra và tiêu chuẩn</p>
+            <details><summary>Xem nội dung thẻ</summary><div class="detail-body"><ul><li>Đầu vào: đề bài, ghi chú môn học, yêu cầu dự án, thời gian học và danh sách từ tiếng Trung.</li><li>Đầu ra: checklist, kế hoạch học hoặc ôn tập, quy trình dự án và bài luyện từ vựng có giải thích.</li><li>Chỉ dùng thông tin luuvu cung cấp hoặc nguồn được nhận diện rõ; hỏi lại khi thiếu dữ kiện.</li></ul></div></details>
+          </div>
+          <span class="level">LEVEL 2</span>
+        </article>
+        <article class="milestone">
+          <div class="rail"><span class="rail-mark"></span></div>
+          <div>
+            <h3 class="milestone-title">Gộp các yêu cầu vào một quy trình</h3>
+            <p class="milestone-sub">Logistics · lập kế hoạch học · Chinese / HSK</p>
+            <details><summary>Xem cách xử lý</summary><div class="detail-body">Phân loại yêu cầu, rà soát tài liệu luuvu gửi, hỏi lại điểm chưa rõ, chuẩn bị kết quả để luuvu xem và tách riêng dữ kiện đã xác nhận với gợi ý.</div></details>
+          </div>
+          <span class="level">LEVEL 3</span>
+        </article>
+        <article class="milestone">
+          <div class="rail"><span class="rail-mark"></span></div>
+          <div>
+            <h3 class="milestone-title">Định hình hồ sơ Agent</h3>
+            <p class="milestone-sub">Một trợ lý cho coursework, kế hoạch học, dự án và tiếng Trung</p>
+            <details><summary>Xem hồ sơ và giới hạn</summary><div class="detail-body">Hồ sơ mô tả phạm vi, mục tiêu học tập, hành động xử lý, đầu ra, tiêu chuẩn thành công và phương án thủ công. Không tự tạo ngày hạn, điểm số hoặc tiến độ.</div></details>
+          </div>
+          <span class="level">LEVEL 4</span>
+        </article>
+        <article class="milestone">
+          <div class="rail"><span class="rail-mark soft"></span></div>
+          <div>
+            <h3 class="milestone-title">Kết nối công cụ và chạy thử</h3>
+            <p class="milestone-sub">Lark / Google Drive chưa cấu hình · chưa có lượt chạy thử</p>
+            <details><summary>Xem bước dự kiến</summary><div class="detail-body">luuvu có thể chia sẻ hoặc cho phép dùng một tài liệu cụ thể. Agent xem tài liệu, chuẩn bị kết quả để luuvu duyệt, và chỉ ghi trở lại Lark hoặc Drive khi kết nối cho phép và luuvu chấp thuận.</div></details>
+          </div>
+          <span class="level pending">LEVEL 5 · CHỜ</span>
+        </article>
+      </div>
+      <div class="callout">
+        <svg viewBox="0 0 20 20" fill="none" aria-hidden="true"><circle cx="10" cy="10" r="8" stroke="currentColor" stroke-width="1.6"/><path d="M10 9v5m0-8h.01" stroke="currentColor" stroke-linecap="round" stroke-width="1.7"/></svg>
+        <span>Trạng thái kết nối và chạy thử được ghi theo tài liệu bạn gửi: chưa cấu hình Lark / Google Drive, chưa chạy thử agent.</span>
+      </div>
+    </section>
+
+    <section id="workflow" class="section" aria-labelledby="workflow-title">
+      <div class="section-head">
+        <div><div class="section-kicker">Level 3</div><h2 id="workflow-title">Một quy trình thống nhất</h2><p class="section-desc">Từ yêu cầu ban đầu tới kết quả luuvu có thể xem lại</p></div>
+      </div>
+      <div class="panel workflow">
+        <div class="step"><span class="step-num">1</span><strong>luuvu gửi yêu cầu</strong><span>Đề bài, tài liệu học hoặc mục tiêu</span></div>
+        <div class="step"><span class="step-num">2</span><strong>Nhận diện loại việc</strong><span>Logistics · kế hoạch · Chinese / HSK</span></div>
+        <div class="step"><span class="step-num">3</span><strong>Rà soát dữ kiện</strong><span>Chỉ dùng tài liệu đã cung cấp; hỏi lại phần thiếu</span></div>
+        <div class="step"><span class="step-num">4</span><strong>Soạn kết quả</strong><span>Checklist, kế hoạch, workflow hoặc bài luyện</span></div>
+        <div class="step"><span class="step-num">5</span><strong>luuvu xem lại</strong><span>Lưu thủ công; ghi tệp cần kết nối và duyệt</span></div>
+      </div>
+    </section>
+
+    <section id="profile" class="section" aria-labelledby="profile-title">
+      <div class="section-head">
+        <div><div class="section-kicker">Level 4</div><h2 id="profile-title">Hồ sơ Agent</h2><p class="section-desc">Phạm vi công việc, mục tiêu và cách trợ lý xử lý thông tin</p></div>
+      </div>
+      <article class="panel profile-intro">
+        <div class="profile-label">POSITION</div>
+        <h3>luuvu's Study &amp; Logistics Assistant</h3>
+        <p>Khi luuvu gửi tài liệu học hoặc yêu cầu hỗ trợ, Agent sắp xếp chúng thành kết quả học tập rõ ràng để luuvu xem lại.</p>
+        <div class="goal-row">
+          <div class="goal"><b>Mục tiêu học tập</b><br>Academic standing 3.4/4.0 hiện tại → 3.6/4.0 mục tiêu</div>
+          <div class="goal blue"><b>Từ vựng HSK</b><br>450/600 từ được nêu trong tài liệu</div>
+        </div>
+      </article>
+      <div class="two-col">
+        <article class="panel info-card">
+          <h3>Đầu vào &amp; trọng tâm</h3>
+          <ul class="bullet-list">
+            <li>Bài tập và dự án Logistics</li>
+            <li>Ghi chú học, chi tiết bài tập, lịch và thời gian rảnh</li>
+            <li>Bài học tiếng Trung, danh sách HSK và câu trả lời luyện tập</li>
+          </ul>
+        </article>
+        <article class="panel info-card">
+          <h3>Các bước xử lý</h3>
+          <ul class="bullet-list">
+            <li>Nhận diện loại yêu cầu và phạm vi</li>
+            <li>Trích xuất yêu cầu, việc cần làm, ngày hạn và chủ đề học</li>
+            <li>Đánh dấu phần thiếu, hỏi luuvu xác nhận và kiểm tra giả định</li>
+          </ul>
+        </article>
+      </div>
+    </section>
+
+    <section class="section" aria-labelledby="outputs-title">
+      <div class="section-head">
+        <div><div class="section-kicker">Kết quả có thể xem lại</div><h2 id="outputs-title">Đầu ra</h2></div>
+      </div>
+      <div class="outputs">
+        <article class="panel output"><span class="icon"><svg width="16" height="16" viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M5 3.5h7l3 3V16.5H5zM8 10h4m-4 3h4M12 3.5v3h3" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span><strong>Kế hoạch học</strong><span>Mục tiêu · thời gian · bước tiếp theo</span></article>
+        <article class="panel output"><span class="icon"><svg width="16" height="16" viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="m4 10 3.5 3.5L16 5m-1 7v4H4V4h7" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/></svg></span><strong>Checklist môn học</strong><span>Yêu cầu · hạn nộp</span></article>
+        <article class="panel output"><span class="icon"><svg width="16" height="16" viewBox="0 0 20 20" fill="none" aria-hidden="true"><circle cx="5" cy="5" r="2" stroke="currentColor" stroke-width="1.5"/><circle cx="15" cy="15" r="2" stroke="currentColor" stroke-width="1.5"/><path d="M7 5h4a2 2 0 0 1 2 2v6" stroke="currentColor" stroke-width="1.5"/></svg></span><strong>Quy trình dự án</strong><span>Công việc · phụ thuộc</span></article>
+        <article class="panel output"><span class="icon"><svg width="16" height="16" viewBox="0 0 20 20" fill="none" aria-hidden="true"><path d="M3.5 5.5h13M5.5 3.5v4m9-4v4M5 9h10v7.5H5zM7.5 12h2m2 0h1" stroke="currentColor" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/></svg></span><strong>Luyện tiếng Trung</strong><span>Từ vựng · giải thích · phản hồi</span></article>
+      </div>
+    </section>
+
+    <section class="section" aria-labelledby="boundaries-title">
+      <div class="section-head">
+        <div><div class="section-kicker">Cách làm việc an toàn và rõ ràng</div><h2 id="boundaries-title">Tiêu chuẩn &amp; giới hạn</h2></div>
+      </div>
+      <div class="boundaries">
+        <article class="panel info-card">
+          <div class="boundary-title"><span class="eyebrow-dot"></span> Tiêu chuẩn</div>
+          <ul class="bullet-list">
+            <li>Chỉ dùng thông tin luuvu cung cấp hoặc cho phép.</li>
+            <li>Tách dữ kiện đã xác nhận khỏi gợi ý.</li>
+            <li>Không tự tạo ngày hạn, điểm số hoặc tiến độ.</li>
+            <li>Hỏi trước khi lưu hoặc chia sẻ tệp.</li>
+          </ul>
+        </article>
+        <article class="panel info-card">
+          <div class="boundary-title gold"><span class="status-dot"></span> Phương án thủ công &amp; ngoài phạm vi</div>
+          <ul class="bullet-list">
+            <li>Nếu không đọc được tệp, đề nghị luuvu dán nội dung.</li>
+            <li>Ngày chưa rõ được đánh dấu “Cần xác nhận”.</li>
+            <li>Không truy cập hệ thống trường hoặc nộp bài tập.</li>
+            <li>Không báo tiến độ khi luuvu chưa xác nhận.</li>
+          </ul>
+        </article>
+      </div>
+      <div class="tool-status"><strong>Trạng thái công cụ:</strong> Lark và Google Drive là các tích hợp được đề xuất; hiện chưa kết nối.</div>
+    </section>
+    <footer>Personal Workbench · luuvu<br>Nội dung và trạng thái được dựng theo tài liệu bạn cung cấp.</footer>
+  </main>
+
+  <nav class="bottomnav" aria-label="Điều hướng nhanh">
+    <div class="bottomnav-inner">
+      <a href="#achievements" aria-current="location"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><path d="m12 3 2.6 5.2 5.8.8-4.2 4.1 1 5.8-5.2-2.7-5.2 2.7 1-5.8L3.6 9l5.8-.8L12 3Z" stroke="currentColor" stroke-width="1.6" stroke-linejoin="round"/></svg><span>Thành tựu</span></a>
+      <a href="#workflow"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><rect x="4" y="3.5" width="16" height="17" rx="3" stroke="currentColor" stroke-width="1.6"/><path d="M8 8h8M8 12h8m-8 4h5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg><span>Quy trình</span></a>
+      <a href="#profile"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><circle cx="12" cy="8" r="3.5" stroke="currentColor" stroke-width="1.6"/><path d="M5.5 20c.5-3.6 2.8-5.5 6.5-5.5s6 1.9 6.5 5.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/></svg><span>Hồ sơ</span></a>
+    </div>
+  </nav>
+  <script>
+    const sections = [...document.querySelectorAll("#achievements, #workflow, #profile")];
+    const links = [...document.querySelectorAll(".topnav a, .bottomnav a")];
+    const observer = new IntersectionObserver((entries) => {
+      for (const entry of entries) {
+        if (!entry.isIntersecting) continue;
+        for (const link of links) {
+          const active = link.getAttribute("href") === "#" + entry.target.id;
+          if (active) link.setAttribute("aria-current", "location");
+          else link.removeAttribute("aria-current");
+        }
+      }
+    }, { rootMargin: "-18% 0px -68% 0px" });
+    sections.forEach(section => observer.observe(section));
+  </script>
+</body>
+</html>
