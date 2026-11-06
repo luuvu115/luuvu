@@ -1,10 +1,10 @@
 <!doctype html>
-<html lang="vi">
+<html lang="en">
 <head>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <meta name="theme-color" content="#f7e6dc">
-  <title>Workbench cá nhân · Vũ</title>
+  <title>Personal Workbench · Vũ</title>
   <style>
     :root {
       --bg: #f8e9e0;
@@ -163,30 +163,30 @@
 </head>
 <body>
   <div class="shell">
-    <aside class="sidebar" aria-label="Điều hướng chính">
+    <aside class="sidebar" aria-label="Main navigation">
       <a class="brand" href="#top"><span class="brand-mark">V.</span><span class="brand-name">个人工作台 · Workbench</span></a>
       <nav class="nav">
         <div class="nav-group">
-          <a class="active" href="#achievements"><span class="nav-icon" aria-hidden="true">☆</span><span class="nav-text">Thành tựu</span></a>
-          <a href="#today"><span class="nav-icon" aria-hidden="true">⌂</span><span class="nav-text">Hôm nay</span></a>
-          <a href="#records"><span class="nav-icon" aria-hidden="true">▤</span><span class="nav-text">Ghi chép</span></a>
-          <a href="#practice"><span class="nav-icon" aria-hidden="true">◉</span><span class="nav-text">Thực hành</span></a>
-          <a href="#work"><span class="nav-icon" aria-hidden="true">▣</span><span class="nav-text">Công việc</span></a>
+          <a class="active" href="#achievements"><span class="nav-icon" aria-hidden="true">☆</span><span class="nav-text">Achievements</span></a>
+          <a href="#today"><span class="nav-icon" aria-hidden="true">⌂</span><span class="nav-text">Today</span></a>
+          <a href="#records"><span class="nav-icon" aria-hidden="true">▤</span><span class="nav-text">Notes</span></a>
+          <a href="#practice"><span class="nav-icon" aria-hidden="true">◉</span><span class="nav-text">Practice</span></a>
+          <a href="#work"><span class="nav-icon" aria-hidden="true">▣</span><span class="nav-text">Work</span></a>
         </div>
         <div class="nav-group">
-          <a href="#knowledge"><span class="nav-icon" aria-hidden="true">◫</span><span class="nav-text">Kiến thức</span></a>
-          <a href="#reflection"><span class="nav-icon" aria-hidden="true">◷</span><span class="nav-text">Nhìn lại</span></a>
-          <a href="#long-term"><span class="nav-icon" aria-hidden="true">⌁</span><span class="nav-text">Dài hạn</span></a>
+          <a href="#knowledge"><span class="nav-icon" aria-hidden="true">◫</span><span class="nav-text">Knowledge</span></a>
+          <a href="#reflection"><span class="nav-icon" aria-hidden="true">◷</span><span class="nav-text">Reflection</span></a>
+          <a href="#long-term"><span class="nav-icon" aria-hidden="true">⌁</span><span class="nav-text">Long-term</span></a>
         </div>
       </nav>
-      <div class="side-foot">Một nơi để giữ<br>việc và ý tưởng.</div>
+      <div class="side-foot">A place to keep<br>work and ideas.</div>
     </aside>
 
     <main id="top">
       <header class="topbar">
         <div class="date-line" id="date-line"></div>
         <div class="top-right">
-          <button class="top-link" type="button" id="capture-link">Ghi nhanh</button>
+          <button class="top-link" type="button" id="capture-link">Quick capture</button>
           <a class="top-link" href="#peter">Peter</a>
           <span class="avatar" aria-label="Vũ">V</span>
         </div>
@@ -194,165 +194,165 @@
 
       <section class="hero" aria-labelledby="greeting">
         <div>
-          <h1 class="greeting" id="greeting">Chào Vũ, mình cùng bắt đầu nhé.</h1>
-          <p class="hero-copy">Một góc riêng để gom công việc, kiến thức và những ý tưởng bạn muốn theo đuổi.</p>
+          <h1 class="greeting" id="greeting">Hello, Vũ. Let's get started.</h1>
+          <p class="hero-copy">A personal space for the work, knowledge, and ideas you want to pursue.</p>
         </div>
         <div class="today-card">
           <strong id="today-date"></strong>
-          <span>Workbench cá nhân · Việt Nam</span>
+          <span>Personal Workbench · Vietnam</span>
         </div>
       </section>
 
       <form class="capture" id="capture-form" autocomplete="off">
-        <input id="capture-input" type="text" maxlength="180" placeholder="Ghi nhanh: một việc / một ý tưởng / một người cần nhớ…" aria-label="Ghi nhanh việc hoặc ý tưởng">
-        <button type="submit" aria-label="Thêm ghi chép">+</button>
+        <input id="capture-input" type="text" maxlength="180" placeholder="Quick note: a task / an idea / someone to remember…" aria-label="Quick note: task or idea">
+        <button type="submit" aria-label="Add note">+</button>
       </form>
 
       <section class="section" id="achievements" aria-labelledby="achievements-title">
         <div class="section-head">
-          <h2 id="achievements-title">Thành tựu</h2>
-          <span class="section-meta">Những nền tảng bạn đang xây</span>
+          <h2 id="achievements-title">Achievements</h2>
+          <span class="section-meta">Foundations you're building</span>
         </div>
         <div class="stats">
           <article class="stat">
-            <div class="stat-label">Agent cá nhân</div>
+            <div class="stat-label">Personal agent</div>
             <div class="stat-value">01<span class="stat-unit">Peter</span></div>
-            <div class="stat-note">Hồ sơ Hermes đã được tạo</div>
+            <div class="stat-note">Hermes profile created</div>
           </article>
           <article class="stat">
-            <div class="stat-label">Model làm việc</div>
+            <div class="stat-label">Working model</div>
             <div class="stat-value" style="font-size:21px">GPT-6 Luna</div>
             <div class="stat-note">OpenAI Codex · reasoning medium</div>
           </article>
           <article class="stat">
-            <div class="stat-label">Kênh nhắn tin</div>
+            <div class="stat-label">Messaging channel</div>
             <div class="stat-value">Lark</div>
-            <div class="stat-note">Feishu adapter đã kết nối với Peter</div>
+            <div class="stat-note">Feishu adapter connected to Peter</div>
           </article>
           <article class="stat">
-            <div class="stat-label">Ngôn ngữ làm việc</div>
-            <div class="stat-value" style="font-size:20px">VI · EN · 中文</div>
-            <div class="stat-note">Giao tiếp và học tập đa ngôn ngữ</div>
+            <div class="stat-label">Working languages</div>
+            <div class="stat-value" style="font-size:20px">Vietnamese · English · Chinese</div>
+            <div class="stat-note">Multilingual communication and learning</div>
           </article>
         </div>
-        <div class="milestones" aria-label="Các cột mốc và việc đang theo đuổi">
+        <div class="milestones" aria-label="Milestones and ongoing work">
           <div class="milestone-row">
-            <div class="milestone"><i class="milestone-dot" aria-hidden="true"></i><div><strong>Tạo agent Peter trên Hermes</strong><span>30 tháng 10 · đã hoàn thành</span></div></div>
-            <div class="milestone"><i class="milestone-dot" aria-hidden="true"></i><div><strong>Chọn GPT-6 Luna · medium</strong><span>30 tháng 10 · đã xác minh phản hồi</span></div></div>
-            <div class="milestone"><i class="milestone-dot" aria-hidden="true"></i><div><strong>Kết nối Peter với Lark</strong><span>30 tháng 10 · adapter đã kết nối</span></div></div>
+            <div class="milestone"><i class="milestone-dot" aria-hidden="true"></i><div><strong>Created the Peter agent on Hermes</strong><span>Oct 30 · completed</span></div></div>
+            <div class="milestone"><i class="milestone-dot" aria-hidden="true"></i><div><strong>Selected GPT-6 Luna · medium</strong><span>Oct 30 · response verified</span></div></div>
+            <div class="milestone"><i class="milestone-dot" aria-hidden="true"></i><div><strong>Connected Peter to Lark</strong><span>Oct 30 · adapter connected</span></div></div>
           </div>
           <div class="milestone-row">
-            <div class="milestone"><i class="milestone-dot future" aria-hidden="true"></i><div><strong>Thử nhắn Peter trực tiếp trên Lark</strong><span>Đang chờ bạn gửi tin nhắn xác nhận</span></div></div>
-            <div class="milestone"><i class="milestone-dot future" aria-hidden="true"></i><div><strong>Hoàn thiện workbench cá nhân</strong><span>Bản đầu tiên theo ảnh tham khảo</span></div></div>
-            <div class="milestone"><i class="milestone-dot future" aria-hidden="true"></i><div><strong>Lưu lại quy trình AI Agent</strong><span>Từ tài liệu hướng dẫn của bạn</span></div></div>
+            <div class="milestone"><i class="milestone-dot future" aria-hidden="true"></i><div><strong>Test messaging Peter directly on Lark</strong><span>Waiting for you to send a confirmation message</span></div></div>
+            <div class="milestone"><i class="milestone-dot future" aria-hidden="true"></i><div><strong>Complete the personal workbench</strong><span>First version based on the reference image</span></div></div>
+            <div class="milestone"><i class="milestone-dot future" aria-hidden="true"></i><div><strong>Save the AI Agent workflow</strong><span>From your guide</span></div></div>
           </div>
         </div>
       </section>
 
       <section class="section" id="today" aria-labelledby="today-title">
         <div class="section-head">
-          <h2 id="today-title">Hôm nay</h2>
-          <span class="section-meta">Các công cụ và ghi chép đang có ở đây</span>
+          <h2 id="today-title">Today</h2>
+          <span class="section-meta">Your current tools and notes</span>
         </div>
         <div class="today-grid">
           <article class="today-stat">
-            <div class="today-stat-label">Agent cá nhân</div>
+            <div class="today-stat-label">Personal agent</div>
             <div class="today-stat-value">Peter</div>
             <div class="today-stat-note">Hermes profile · GPT-6 Luna</div>
           </article>
           <article class="today-stat">
-            <div class="today-stat-label">Kênh liên lạc</div>
+            <div class="today-stat-label">Contact channel</div>
             <div class="today-stat-value">Lark</div>
-            <div class="today-stat-note">Đã kết nối · chờ thử tin nhắn</div>
+            <div class="today-stat-note">Connected · awaiting a message test</div>
           </article>
           <article class="today-stat">
-            <div class="today-stat-label">Model làm việc</div>
+            <div class="today-stat-label">Working model</div>
             <div class="today-stat-value" style="font-size:18px">GPT-6 Luna</div>
             <div class="today-stat-note">OpenAI Codex · reasoning medium</div>
           </article>
           <article class="today-stat">
-            <div class="today-stat-label">Ghi chép nhanh</div>
+            <div class="today-stat-label">Quick notes</div>
             <div class="today-stat-value" id="record-total">0</div>
-            <div class="today-stat-note">Ý tưởng lưu trong trình duyệt này</div>
+            <div class="today-stat-note">Ideas saved in this browser</div>
           </article>
         </div>
       </section>
 
       <section class="section" id="records" aria-labelledby="records-title">
         <div class="section-head">
-          <h2 id="records-title">Ghi chép · Thực hành · Công việc</h2>
-          <span class="section-meta">Thông tin từ những việc bạn đã làm</span>
+          <h2 id="records-title">Notes · Practice · Work</h2>
+          <span class="section-meta">Details from things you've done</span>
         </div>
         <div class="three-col">
           <article class="content-card" id="work">
-            <h3>Công việc · gần đây</h3>
+            <h3>Work · recent</h3>
             <div class="list">
-              <div class="list-item"><span>Peter · trợ lý Hermes</span><small>Agent cá nhân</small></div>
-              <div class="list-item"><span>Kết nối Feishu / Lark</span><small>Đã cấu hình</small></div>
-              <div class="list-item"><span>Workbench cá nhân</span><small>Đang thiết kế</small></div>
+              <div class="list-item"><span>Peter · Hermes assistant</span><small>Personal agent</small></div>
+              <div class="list-item"><span>Feishu / Lark connection</span><small>Configured</small></div>
+              <div class="list-item"><span>Personal workbench</span><small>In progress</small></div>
             </div>
           </article>
           <article class="content-card" id="practice">
-            <h3>Thực hành · công cụ</h3>
+            <h3>Practice · tools</h3>
             <div class="list">
               <div class="list-item"><span>OpenAI · GPT-6 Luna</span><small>Medium</small></div>
               <div class="list-item"><span>Hermes Agent</span><small>Gateway</small></div>
-              <div class="list-item"><span>Codex</span><small>Phát triển</small></div>
+              <div class="list-item"><span>Codex</span><small>Development</small></div>
             </div>
           </article>
           <article class="content-card">
-            <h3>Ghi nhanh</h3>
+            <h3>Quick notes</h3>
             <div class="list" id="record-list" aria-live="polite"></div>
-            <div class="list-item" id="record-empty"><span>Chưa có ghi chép</span><small>Thêm ở đầu trang</small></div>
+            <div class="list-item" id="record-empty"><span>No notes yet</span><small>Add one at the top</small></div>
           </article>
         </div>
       </section>
 
       <section class="section" id="knowledge" aria-labelledby="knowledge-title">
         <div class="section-head">
-          <h2 id="knowledge-title">Kiến thức · Nhìn lại · Dài hạn</h2>
-          <span class="section-meta">Những điều đáng giữ lại</span>
+          <h2 id="knowledge-title">Knowledge · Reflection · Long-term</h2>
+          <span class="section-meta">Things worth keeping</span>
         </div>
         <div class="bottom-grid">
           <article class="content-card knowledge-card">
             <div class="knowledge-copy">
-              <h3>Kiến thức</h3>
-              <p>AI Agent 简易教程<br>Quy trình xây dựng agent, thiết lập Hermes và kết nối Lark.</p>
+              <h3>Knowledge</h3>
+              <p>AI Agent Quick Guide<br>How to build an agent, configure Hermes, and connect Lark.</p>
               <div class="knowledge-tags"><span class="tag">AI Agent</span><span class="tag">Hermes</span><span class="tag">Lark</span></div>
             </div>
             <div class="knowledge-copy" id="reflection">
-              <h3>Nhìn lại</h3>
-              <p>Điều gì hôm nay đã giúp công việc của bạn nhẹ hơn?</p>
+              <h3>Reflection</h3>
+              <p>What made your work easier today?</p>
               <div class="reflection">
-                <textarea id="reflection-input" maxlength="900" placeholder="Ghi lại một điều bạn muốn nhớ… " aria-label="Ghi chú nhìn lại"></textarea>
-                <div class="save-line"><span><i class="save-dot" aria-hidden="true"></i><span id="reflection-status">Lưu tự động trên thiết bị</span></span><span id="reflection-count">0 / 900</span></div>
+                <textarea id="reflection-input" maxlength="900" placeholder="Write down one thing you want to remember… " aria-label="Reflection note"></textarea>
+                <div class="save-line"><span><i class="save-dot" aria-hidden="true"></i><span id="reflection-status">Auto-saved on this device</span></span><span id="reflection-count">0 / 900</span></div>
               </div>
             </div>
           </article>
           <article class="content-card long-card" id="long-term">
             <div>
-              <h3>Dài hạn</h3>
-              <div class="long-title">Xây dựng một trợ lý hữu ích mỗi ngày</div>
-              <div class="long-copy">Peter · Codex · Lark<br>Một hệ thống nhỏ, thực tế và phù hợp cách bạn làm việc.</div>
+              <h3>Long-term</h3>
+              <div class="long-title">Build a useful assistant every day</div>
+              <div class="long-copy">Peter · Codex · Lark<br>A small, practical system that fits the way you work.</div>
             </div>
-            <a class="long-link" href="#peter">Xem cấu hình Peter ↓</a>
+            <a class="long-link" href="#peter">View Peter's setup ↓</a>
           </article>
         </div>
       </section>
 
-      <section class="section" id="peter" aria-label="Thông tin Peter">
+      <section class="section" id="peter" aria-label="About Peter">
         <div class="section-head">
           <h2>Peter · Hermes</h2>
           <span class="section-meta">GPT-6 Luna · OpenAI Codex · medium</span>
         </div>
         <div class="content-card">
           <div class="list">
-            <div class="list-item"><span>Model đã phản hồi qua lệnh kiểm tra Hermes</span><small>Đã xác minh</small></div>
-            <div class="list-item"><span>Feishu adapter hoạt động trong gateway</span><small>Đã kết nối</small></div>
+            <div class="list-item"><span>Model responded to the Hermes test command</span><small>Verified</small></div>
+            <div class="list-item"><span>Feishu adapter is running in the gateway</span><small>Connected</small></div>
           </div>
           <div style="display:flex;align-items:center;justify-content:space-between;gap:12px;margin-top:12px">
-            <span class="section-meta" style="text-align:left">Mở Peter trong terminal trên máy của bạn</span>
-            <button id="copy-command" type="button" style="border:0;border-radius:9px;padding:9px 12px;background:#f8e4d8;color:#875236;font-size:9px;font-weight:650;cursor:pointer">Sao chép hermes -p peter chat</button>
+            <span class="section-meta" style="text-align:left">Open Peter in the terminal on your computer</span>
+            <button id="copy-command" type="button" style="border:0;border-radius:9px;padding:9px 12px;background:#f8e4d8;color:#875236;font-size:9px;font-weight:650;cursor:pointer">Copy hermes -p peter chat</button>
           </div>
         </div>
       </section>
@@ -368,7 +368,7 @@
         set(key, value) { try { localStorage.setItem(key, JSON.stringify(value)); return true; } catch { return false; } }
       };
       const now = new Date();
-      const formatter = (options) => new Intl.DateTimeFormat('vi-VN', { timeZone: 'Asia/Ho_Chi_Minh', ...options });
+      const formatter = (options) => new Intl.DateTimeFormat('en-US', { timeZone: 'Asia/Ho_Chi_Minh', ...options });
       const parts = Object.fromEntries(formatter({ year: 'numeric', month: 'numeric', day: 'numeric' }).formatToParts(now).map(part => [part.type, part.value]));
       const dateLabel = formatter({ weekday: 'long', day: 'numeric', month: 'long' }).format(now);
       $('#date-line').textContent = dateLabel.charAt(0).toUpperCase() + dateLabel.slice(1);
@@ -383,7 +383,7 @@
       const sunday = new Date(monday);
       sunday.setUTCDate(monday.getUTCDate() + 6);
       const monthLabel = formatter({ month: 'long', year: 'numeric' }).format(now);
-      $('.today-card span').textContent = 'Workbench cá nhân · ' + monthLabel;
+      $('.today-card span').textContent = 'Personal Workbench · ' + monthLabel;
 
       const recordsKey = 'vu-workbench-records-v2';
       const reflectKey = 'vu-workbench-reflection-v2';
@@ -426,7 +426,7 @@
         storage.set(recordsKey, records);
         input.value = '';
         renderRecords();
-        toast('Đã lưu ghi chép trên thiết bị này');
+        toast('Note saved on this device');
       });
       $('#capture-link').addEventListener('click', () => {
         $('#capture-input').focus();
@@ -437,13 +437,13 @@
       function saveReflection() {
         const ok = storage.set(reflectKey, reflect.value);
         $('#reflection-count').textContent = reflect.value.length + ' / 900';
-        $('#reflection-status').textContent = ok ? 'Đã lưu trên thiết bị' : 'Không lưu được trong trình duyệt';
+        $('#reflection-status').textContent = ok ? 'Saved on this device' : 'Could not save in this browser';
       }
       reflect.addEventListener('input', saveReflection);
       saveReflection();
       $('#copy-command').addEventListener('click', async () => {
-        try { await navigator.clipboard.writeText('hermes -p peter chat'); toast('Đã sao chép lệnh mở Peter'); }
-        catch { toast('Lệnh: hermes -p peter chat'); }
+        try { await navigator.clipboard.writeText('hermes -p peter chat'); toast('Copied the command to open Peter'); }
+        catch { toast('Command: hermes -p peter chat'); }
       });
       document.querySelectorAll('.nav a').forEach(link => link.addEventListener('click', () => {
         document.querySelectorAll('.nav a').forEach(item => item.classList.remove('active'));
